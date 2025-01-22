@@ -3,4 +3,5 @@ export interface Match {
   awayTeam: string;
   homeScore: number;
   awayScore: number;
+  timestamp?: number;
 }
