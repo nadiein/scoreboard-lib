@@ -21,7 +21,7 @@ export const Scoreboard: FunctionComponent<ScoreboardProps> = ({
   onMatchUpdate,
   onMatchFinish
 }: ScoreboardProps): ReactElement => {
-  const { matches, startMatch, updateScore, finishMatch } = useScoreboard(),
+  const { matches, sortedMatches, startMatch, updateScore, finishMatch } = useScoreboard(),
     [homeTeam, setHomeTeam] = useState<string>(''),
     [awayTeam, setAwayTeam] = useState<string>(''),
     [scores, setScores] = useState<{ [key: string]: { home: string; away: string } }>({}),
@@ -36,15 +36,15 @@ export const Scoreboard: FunctionComponent<ScoreboardProps> = ({
     onMatchStart?.(homeTeam, awayTeam);
   };
 
-  const handleUpdateMatch = (homeTeam: string, awayTeam: string): void => {
-    const key = `${homeTeam}-${awayTeam}`;
-    const home = parseInt(scores[key]?.home || '0', 10);
-    const away = parseInt(scores[key]?.away || '0', 10);
+  const handleUpdateMatch = (matchId: string, homeTeam: string, awayTeam: string): void => {
+    const key = `${homeTeam}-${awayTeam}`,
+      home = parseInt(scores[key]?.home || '0', 10),
+      away = parseInt(scores[key]?.away || '0', 10);
 
     if (isNaN(home) || isNaN(away)) return alert('Scores must be numbers!');
 
-    updateScore(homeTeam, awayTeam, home, away);
-    onMatchUpdate?.({ homeTeam, awayTeam, homeScore: home, awayScore: away, timestamp: Date.now() });
+    updateScore(matchId, home, away);
+    onMatchUpdate?.({ matchId, homeTeam, awayTeam, homeScore: home, awayScore: away, timestamp: Date.now() });
   };
 
   const handleFinishMatch = (matchId: string): void => {
@@ -57,43 +57,38 @@ export const Scoreboard: FunctionComponent<ScoreboardProps> = ({
     onMatchFinish?.(matchId);
   };
 
-  const getSortedMatches = (): Match[] => {
-    return [...matches].sort((a, b) => {
-      const totalScoreA = a.homeScore + a.awayScore;
-      const totalScoreB = b.homeScore + b.awayScore;
-      return totalScoreB === totalScoreA ? (b.timestamp ?? 0) - (a.timestamp ?? 0) : totalScoreB - totalScoreA;
-    });
-  };
-
   return (
     <div className="scoreboard-wrapper">
       <h2>Live Football Scoreboard</h2>
 
       <ul>
-        {matches.map((match, index) => {
-          const key = `${match.homeTeam}-${match.awayTeam}`;
+        {matches.map((match) => {
           return (
-            <li key={index}>
+            <li key={match.matchId}>
               {match.homeTeam} {match.homeScore} - {match.awayTeam} {match.awayScore}
               <div>
                 <input
-                  type="text"
-                  placeholder="Home Score"
-                  value={scores[key]?.home || 0}
+                  type="number"
+                  step="1"
+                  min="0"
+                  placeholder="0"
+                  value={scores[match.matchId]?.home || ''}
                   onChange={(e) =>
-                    setScores((prev) => ({ ...prev, [key]: { ...prev[key], home: e.target.value } }))
+                    setScores((prev) => ({ ...prev, [match.matchId]: { ...prev[match.matchId], home: e.target.value } }))
                   }
                 />
                 <input
-                  type="text"
-                  placeholder="Away Score"
-                  value={scores[key]?.away || 0}
+                  type="number"
+                  step="1"
+                  min="0"
+                  placeholder="0"
+                  value={scores[match.matchId]?.away || ''}
                   onChange={(e) =>
-                    setScores((prev) => ({ ...prev, [key]: { ...prev[key], away: e.target.value } }))
+                    setScores((prev) => ({ ...prev, [match.matchId]: { ...prev[match.matchId], away: e.target.value } }))
                   }
                 />
-                <button onClick={() => handleUpdateMatch(match.homeTeam, match.awayTeam)}>Update Score</button>
-                <button onClick={() => handleFinishMatch(key)}>Finish Match</button>
+                <button onClick={() => handleUpdateMatch(match.matchId, match.homeTeam, match.awayTeam)}>Update Score</button>
+                <button onClick={() => handleFinishMatch(match.matchId)}>Finish Match</button>
               </div>
             </li>
           );
@@ -118,14 +113,14 @@ export const Scoreboard: FunctionComponent<ScoreboardProps> = ({
 
       {showSummary && (
         <ul>
-          {getSortedMatches().map((match, index) => (
+          {sortedMatches.map((match, index) => (
             <li key={index}>
               {match.homeTeam} {match.homeScore} - {match.awayTeam} {match.awayScore}
             </li>
           ))}
         </ul>
       )}
-      <button disabled={getSortedMatches().length === 0} onClick={() => setShowSummary((prev) => !prev)}>
+      <button disabled={sortedMatches.length === 0} onClick={() => setShowSummary((prev) => !prev)}>
         {showSummary ? 'Hide Summary' : 'Show Summary (Ordered by Score)'}
       </button>
     </div>
