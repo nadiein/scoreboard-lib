@@ -6,14 +6,16 @@ import pluginReact from 'eslint-plugin-react';
 export default [
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    env: {
-      browser: true,
-      node: true,
-      es2021: true,
+    languageOptions: {
+      globals: {
+        browser: true,
+        node: true,
+        es2021: true
+      }
     },
     settings: {
       react: {
-        version: 'detect',
+        version: 'detect'
       }
     },
     rules: {
@@ -30,13 +32,13 @@ export default [
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
       'no-console': 'warn',
-      'no-debugger': 'warn',
+      'no-debugger': 'warn'
     },
     plugins: {
-      'no-unused-imports': noUnusedImports,
+      'no-unused-imports': noUnusedImports
     }
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat.recommended
 ];

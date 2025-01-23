@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
+    "module": "ESNext",
     "target": "es5",
     "lib": ["dom", "esnext"],
     "jsx": "react",
     "moduleResolution": "node",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["jest", "node"]
 
   },
-  "include": ["src/**/*.tsx", "src/**/*.test.ts"]
+  "include": ["src/**/*.tsx", "src/**/*.spec.ts", "src/setupTests.ts"]
 }
