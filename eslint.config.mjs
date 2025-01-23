@@ -6,7 +6,11 @@ import pluginReact from 'eslint-plugin-react';
 export default [
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    ignores: ['webpack.config.*'],
+    env: {
+      browser: true,
+      node: true,
+      es2021: true,
+    },
     settings: {
       react: {
         version: 'detect',

@@ -10,7 +10,8 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
-      react: require.resolve('react')
+      react: require.resolve('react'),
+      '@tests': path.resolve(__dirname, 'src/tests')
     }
   },
   module: {
