@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Match } from '../../models/match/Match';
+import { Match, Team, TeamId } from '../../models/match/Match';
 
 interface ScoreboardContextType {
   matches: Match[];
   sortedMatches: Match[];
-  startMatch: (homeTeam: string, awayTeam: string) => void;
+  startMatch: (homeTeamName: string, awayTeamName: string) => void;
   updateScore: (matchId: string, homeScore: number, awayScore: number) => void;
   finishMatch: (matchId: string) => void;
 }
@@ -14,15 +14,22 @@ export const ScoreboardContext = createContext<ScoreboardContextType | undefined
 export const ScoreboardProvider = ({ children }: { children: ReactNode }) => {
   const [matches, setMatches] = useState<Match[]>([]);
 
-  const startMatch = (homeTeam: string, awayTeam: string): void => {
-    const matchId = `${homeTeam}-${awayTeam}`;
-    setMatches((prev: Match[]) => [...prev, { matchId, homeTeam, awayTeam, homeScore: 0, awayScore: 0, timestamp: Date.now() }]);
+  const startMatch = (homeTeamName: string, awayTeamName: string): void => {
+    const matchId = `${homeTeamName}-${awayTeamName}`;
+    const homeTeam: Team = { type: TeamId.HOME, name: homeTeamName, score: 0 };
+    const awayTeam: Team = { type: TeamId.AWAY, name: awayTeamName, score: 0 };
+
+    setMatches((prev: Match[]) => [...prev, { matchId, homeTeam, awayTeam, timestamp: Date.now() }]);
   };
 
   const updateScore = (matchId: string, homeScore: number, awayScore: number): void => {
     setMatches((prev: Match[]) =>
       prev.map((match: Match) =>
-        match.matchId === matchId ? { ...match, homeScore, awayScore } : match
+        match.matchId === matchId ? {
+          ...match,
+          homeTeam: { ...match.homeTeam, score: homeScore },
+          awayTeam: { ...match.awayTeam, score: awayScore }
+        } : match
       )
     );
   };
@@ -32,8 +39,8 @@ export const ScoreboardProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const sortedMatches = [...matches].sort((a, b) => {
-    const totalScoreA = a.homeScore + a.awayScore,
-      totalScoreB = b.homeScore + b.awayScore;
+    const totalScoreA = a.homeTeam.score + a.awayTeam.score;
+    const totalScoreB = b.homeTeam.score + b.awayTeam.score;
     return totalScoreB === totalScoreA ? (b.timestamp ?? 0) - (a.timestamp ?? 0) : totalScoreB - totalScoreA;
   });
 
