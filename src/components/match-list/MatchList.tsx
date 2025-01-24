@@ -9,7 +9,12 @@ export const MatchList: FunctionComponent<{
 }> = ({ matches, onFinishMatch, onUpdateScore }) => (
   <ul>
     {matches.map((match) => (
-      <MatchItem key={match.matchId} match={match} onFinishMatch={onFinishMatch} onUpdateScore={onUpdateScore} />
+      <MatchItem
+        key={match.matchId}
+        match={match}
+        onFinishMatch={onFinishMatch}
+        onUpdateScore={onUpdateScore}
+      />
     ))}
   </ul>
 );

@@ -4,20 +4,7 @@ import { MatchList } from '../match-list/MatchList';
 import { MatchForm } from '../match-form/MatchForm';
 import { SummaryList } from '../summary-list/SummaryList';
 
-interface MatchStartProps {
-  onMatchStart?: (homeTeam: string, awayTeam: string) => void;
-}
-
-interface MatchFinishProps {
-  onMatchFinish?: (matchId: string) => void;
-}
-
-type ScoreboardProps = MatchStartProps & MatchFinishProps;
-
-export const Scoreboard: FunctionComponent<ScoreboardProps> = ({
-  onMatchStart,
-  onMatchFinish
-}: ScoreboardProps): ReactElement => {
+export const Scoreboard: FunctionComponent = (): ReactElement => {
   const { matches, sortedMatches, startMatch, updateScore, finishMatch } = useScoreboard(),
     [matchForm, setMatchForm] = useState({ home: '', away: '' }),
     [showSummary, setShowSummary] = useState<boolean>(false);
@@ -25,12 +12,10 @@ export const Scoreboard: FunctionComponent<ScoreboardProps> = ({
   const handleStartMatch = (): void => {
     startMatch(matchForm.home, matchForm.away);
     setMatchForm({ home: '', away: '' });
-    onMatchStart?.(matchForm.home, matchForm.away);
   };
 
   const handleFinishMatch = (matchId: string): void => {
     finishMatch(matchId);
-    onMatchFinish?.(matchId);
   };
 
   const toggleShowSummary = () => {
