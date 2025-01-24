@@ -8,14 +8,15 @@ export default {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js'
+    filename: 'index.js',
+    library: {
+      name: 'scoreboard-lib',
+      type: 'umd'
+    },
+    globalObject: 'this'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
-    alias: {
-      react: 'react',
-      '@tests': path.resolve(__dirname, 'src/tests')
-    }
   },
   module: {
     rules: [
@@ -36,6 +37,10 @@ export default {
       template: './public/index.html'
     })
   ],
+  externals: {
+    react: 'react',
+    'react-dom': 'react-dom'
+  },
   devtool: 'source-map',
   devServer: {
     static: {

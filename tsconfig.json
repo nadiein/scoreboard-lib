@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
     "module": "ESNext",
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "esnext"],
     "jsx": "react",
     "moduleResolution": "node",
@@ -10,5 +12,5 @@
     "types": ["jest", "node"]
 
   },
-  "include": ["src/**/*.tsx", "src/**/*.spec.ts", "src/setupTests.ts"]
+  "include": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.spec.ts", "src/setupTests.ts"]
 }

@@ -1,6 +1,2 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { App } from './App';
-
-const root = createRoot(document.getElementById('root')!);
-root.render(<App />);
+export { Scoreboard } from './components/scoreboard/Scoreboard';
+export { useScoreboard, ScoreboardProvider } from './contexts/scoreboard/ScoreboardContext';

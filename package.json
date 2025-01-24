@@ -1,8 +1,9 @@
 {
-  "name": "score-board",
+  "name": "scoreboard-lib",
   "version": "1.0.0",
   "description": "Scoreboard Library",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "start": "webpack serve --mode development --open",
@@ -12,17 +13,11 @@
   },
   "author": "nadiein",
   "license": "ISC",
-  "dependencies": {
-    "@types/react": "^19.0.7",
-    "@types/react-dom": "^19.0.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "typescript": "^5.7.3"
-  },
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@eslint/js": "^9.18.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
@@ -44,6 +39,13 @@
     "typescript-eslint": "^8.20.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.0"
+    "webpack-dev-server": "^5.2.0",
+    "typescript": "^5.7.3",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
