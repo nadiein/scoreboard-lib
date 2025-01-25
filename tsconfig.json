@@ -12,5 +12,5 @@
     "types": ["jest", "node"]
 
   },
-  "include": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.spec.ts", "src/setupTests.ts"]
+  "include": ["src/index.prod.tsx"]
 }

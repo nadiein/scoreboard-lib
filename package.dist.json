@@ -1,0 +1,19 @@
+{
+  "name": "@inadiein/scoreboard-lib",
+  "version": "1.0.0",
+  "description": "Scoreboard Library",
+  "keywords": ["scoreboard", "react", "library"],
+  "author": "inadiein",
+  "license": "ISC",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    "import": "./index.js",
+    "require": "./index.js"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
