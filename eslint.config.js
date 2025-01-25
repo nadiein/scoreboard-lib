@@ -2,17 +2,13 @@ import noUnusedImports from 'eslint-plugin-unused-imports';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
-import path from 'path';
-
-const __dirname = path.resolve();
 
 export default [
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    ignores: [
-      path.join(__dirname, 'dist'),
-      path.join(__dirname, 'configs')
-    ],
     languageOptions: {
       globals: {
         browser: true,
@@ -30,7 +26,6 @@ export default [
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-var-requires': 'warn',
       'no-var': 'error',
-      'no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
@@ -44,8 +39,5 @@ export default [
     plugins: {
       'no-unused-imports': noUnusedImports
     }
-  },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended
+  }
 ];

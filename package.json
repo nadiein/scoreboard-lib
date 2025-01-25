@@ -8,7 +8,7 @@
   "scripts": {
     "start": "webpack serve --config configs/webpack/webpack.dev.js",
     "build": "webpack --config configs/webpack/webpack.prod.js && cp package.dist.json dist/package.json",
-    "lint": "eslint",
+    "lint": "eslint . --ignore-pattern 'dist/*'",
     "test": "jest"
   },
   "author": "inadiein",
