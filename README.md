@@ -27,7 +27,7 @@ To use the library locally in another React app:
 
 1️⃣ **Clone the repository**:  
 \`\`\`sh
-git clone https://github.com/inadiein/scoreboard-lib.git
+git clone https://github.com/nadiein/scoreboard-lib.git
 cd scoreboard-lib
 \`\`\`
 
